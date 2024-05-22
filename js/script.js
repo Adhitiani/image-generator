@@ -5,8 +5,25 @@ const img = document.querySelector(".img");
 
 const getImage = async function () {
   const res = await fetch("https://picsum.photos/v2/list?limit=100");
-  const images = res.json();
-  console.log(images)
+  const images = await res.json();
+  selectRandomImage(images)
+
 }
 
-getImage()
+function selectRandomImage(images) {
+  let randomIndex = Math.floor(Math.random() * images.length);
+  let randomImage = images[randomIndex];
+  displayImage(randomImage)
+}
+
+function displayImage(randomImage) {
+  let author = randomImage.author;
+  let imageAddress = randomImage.download_url;
+  authorSpan.innerText = author;
+  img.src = imageAddress;
+  imgDiv.classList.remove("hide");
+}
+
+button.addEventListener("click", function () {
+  getImage()
+});
